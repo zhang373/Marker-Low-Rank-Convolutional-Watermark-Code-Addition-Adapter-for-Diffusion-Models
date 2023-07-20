@@ -16,12 +16,14 @@ class PLMSSampler(object):
         self.schedule = schedule
 
     def register_buffer(self, name, attr):
+        # 这个是用来记录寄存器的，其中的参数是可以更新的
         if type(attr) == torch.Tensor:
             if attr.device != torch.device("cuda"):
                 attr = attr.to(torch.device("cuda"))
-        setattr(self, name, attr)
+        setattr(self, name, attr)   # 实际的用处就是一个简单的幅值
 
     def make_schedule(self, ddim_num_steps, ddim_discretize="uniform", ddim_eta=0., verbose=True):
+        # 产生DDMP中所提及的schedual, 并且规划每一个step干了什么
         if ddim_eta != 0:
             raise ValueError('ddim_eta must be 0 for PLMS')
         self.ddim_timesteps = make_ddim_timesteps(ddim_discr_method=ddim_discretize, num_ddim_timesteps=ddim_num_steps,
@@ -79,6 +81,7 @@ class PLMSSampler(object):
                # this has to come in the same format as the conditioning, # e.g. as encoded tokens, ...
                **kwargs
                ):
+        # 上边txt2img的入口函数，进行采样的
         if conditioning is not None:
             if isinstance(conditioning, dict):
                 cbs = conditioning[list(conditioning.keys())[0]].shape[0]
@@ -93,7 +96,7 @@ class PLMSSampler(object):
         C, H, W = shape
         size = (batch_size, C, H, W)
         print(f'Data shape for PLMS sampling is {size}')
-
+        # 先生成一个schedual，然后再送进plms_sampling进行一次采样。这个地方实际上就是打包
         samples, intermediates = self.plms_sampling(conditioning, size,
                                                     callback=callback,
                                                     img_callback=img_callback,
@@ -119,17 +122,20 @@ class PLMSSampler(object):
                       temperature=1., noise_dropout=0., score_corrector=None, corrector_kwargs=None,
                       unconditional_guidance_scale=1., unconditional_conditioning=None,):
         device = self.model.betas.device
+        # 完成一个DDPM规定的采样
         b = shape[0]
         if x_T is None:
             img = torch.randn(shape, device=device)
         else:
             img = x_T
+        # 是否给一个X_T作为初始化的值
 
         if timesteps is None:
             timesteps = self.ddpm_num_timesteps if ddim_use_original_steps else self.ddim_timesteps
         elif timesteps is not None and not ddim_use_original_steps:
             subset_end = int(min(timesteps / self.ddim_timesteps.shape[0], 1) * self.ddim_timesteps.shape[0]) - 1
             timesteps = self.ddim_timesteps[:subset_end]
+        # set time step
 
         intermediates = {'x_inter': [img], 'pred_x0': [img]}
         time_range = list(reversed(range(0,timesteps))) if ddim_use_original_steps else np.flip(timesteps)
@@ -149,6 +155,7 @@ class PLMSSampler(object):
                 img_orig = self.model.q_sample(x0, ts)  # TODO: deterministic forward pass?
                 img = img_orig * mask + (1. - mask) * img
 
+            # 这个地方构建了一个去噪循环
             outs = self.p_sample_plms(img, cond, ts, index=index, use_original_steps=ddim_use_original_steps,
                                       quantize_denoised=quantize_denoised, temperature=temperature,
                                       noise_dropout=noise_dropout, score_corrector=score_corrector,
@@ -234,3 +241,4 @@ class PLMSSampler(object):
         x_prev, pred_x0 = get_x_prev_and_pred_x0(e_t_prime, index)
 
         return x_prev, pred_x0, e_t
+    # 这个地方就是DDPM已经预先定义好的东西
