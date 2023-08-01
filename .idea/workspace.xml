@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="29d5941e-790a-4ac4-86b1-5b2dbbccff54" name="变更" comment="">
+      <change afterPath="$PROJECT_DIR$/MarkerNet" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TestSpace.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Workspace.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ldm/modules/attention.py" beforeDir="false" afterPath="$PROJECT_DIR$/ldm/modules/attention.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ldm/modules/diffusionmodules/openaimodel.py" beforeDir="false" afterPath="$PROJECT_DIR$/ldm/modules/diffusionmodules/openaimodel.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2ShBnX0RUg6AjaE01oqR6ZLhJfg" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "E:/CV_NLP_Reasoning/Code/SS/stable_signature_tochang",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="TestSpace" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="MarkerNet_todo" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="D:\python\Anaconda\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/TestSpace.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="29d5941e-790a-4ac4-86b1-5b2dbbccff54" name="变更" comment="" />
+      <created>1689589099311</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1689589099311</updated>
+      <workItem from="1689589100849" duration="313000" />
+      <workItem from="1689659208275" duration="8768000" />
+      <workItem from="1689842159446" duration="10024000" />
+      <workItem from="1690112695231" duration="604000" />
+      <workItem from="1690340060308" duration="1246000" />
+      <workItem from="1690428522409" duration="5672000" />
+      <workItem from="1690440389598" duration="2015000" />
+      <workItem from="1690442437417" duration="11376000" />
+      <workItem from="1690468808187" duration="3940000" />
+      <workItem from="1690510569897" duration="29041000" />
+      <workItem from="1690595972427" duration="2484000" />
+      <workItem from="1690621953737" duration="9220000" />
+      <workItem from="1690776961100" duration="4578000" />
+      <workItem from="1690787068505" duration="13049000" />
+      <workItem from="1690817414330" duration="4228000" />
+      <workItem from="1690859594921" duration="1516000" />
+      <workItem from="1690892001910" duration="226000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/MarkerNet_todo$TestSpace.coverage" NAME="TestSpace 覆盖结果" MODIFIED="1690861525196" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/MarkerNet_todo$Workspace.coverage" NAME="Workspace 覆盖结果" MODIFIED="1690807316078" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>

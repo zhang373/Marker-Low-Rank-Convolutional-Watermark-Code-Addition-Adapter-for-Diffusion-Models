@@ -74,7 +74,7 @@ def zero_module(module):
 
 
 def Normalize(in_channels):
-    return torch.nn.GroupNorm(num_groups=32, num_channels=in_channels, eps=1e-6, affine=True)
+    return torch.nn.GroupNorm(num_groups=2, num_channels=in_channels, eps=1e-6, affine=True)
 
 
 class LinearAttention(nn.Module):
@@ -89,7 +89,7 @@ class LinearAttention(nn.Module):
         b, c, h, w = x.shape
         qkv = self.to_qkv(x)
         q, k, v = rearrange(qkv, 'b (qkv heads c) h w -> qkv b heads c (h w)', heads = self.heads, qkv=3)
-        k = k.softmax(dim=-1)  
+        k = k.softmax(dim=-1)
         context = torch.einsum('bhdn,bhen->bhde', k, v)
         out = torch.einsum('bhde,bhdn->bhen', context, q)
         out = rearrange(out, 'b heads c (h w) -> b (heads c) h w', heads=self.heads, h=h, w=w)
@@ -174,9 +174,9 @@ class CrossAttention(nn.Module):
         context = default(context, x)
         k = self.to_k(context)
         v = self.to_v(context)
-
+        print("qkv177:", k.shape,q.shape, v.shape)
         q, k, v = map(lambda t: rearrange(t, 'b n (h d) -> (b h) n d', h=h), (q, k, v))
-
+        print("qkv179:", k.shape, q.shape, v.shape)
         sim = einsum('b i d, b j d -> b i j', q, k) * self.scale
 
         if exists(mask):
@@ -228,6 +228,7 @@ class SpatialTransformer(nn.Module):
         super().__init__()
         self.in_channels = in_channels
         inner_dim = n_heads * d_head
+        print("in_chinal in Attention:", in_channels)
         self.norm = Normalize(in_channels)
 
         self.proj_in = nn.Conv2d(in_channels,
@@ -259,3 +260,91 @@ class SpatialTransformer(nn.Module):
         x = rearrange(x, 'b (h w) c -> b c h w', h=h, w=w)
         x = self.proj_out(x)
         return x + x_in
+
+    class CrossAttention(nn.Module):
+        def __init__(self, query_dim, context_dim=None, heads=8, dim_head=64, dropout=0.):
+            super().__init__()
+            inner_dim = dim_head * heads
+            context_dim = default(context_dim, query_dim)
+
+            self.scale = dim_head ** -0.5
+            self.heads = heads
+
+            self.to_q = nn.Linear(query_dim, inner_dim, bias=False)
+            self.to_k = nn.Linear(context_dim, inner_dim, bias=False)
+            self.to_v = nn.Linear(context_dim, inner_dim, bias=False)
+
+            self.to_out = nn.Sequential(
+                nn.Linear(inner_dim, query_dim),
+                nn.Dropout(dropout)
+            )
+
+        def forward(self, x, context=None, mask=None):
+            h = self.heads
+
+            q = self.to_q(x)
+            context = default(context, x)
+            k = self.to_k(context)
+            v = self.to_v(context)
+            print("The Shape: ",k.shape,q.shape,v.shape)
+            q, k, v = map(lambda t: rearrange(t, 'b n (h d) -> (b h) n d', h=h), (q, k, v))
+
+            sim = einsum('b i d, b j d -> b i j', q, k) * self.scale
+
+            if exists(mask):
+                mask = rearrange(mask, 'b ... -> b (...)')
+                max_neg_value = -torch.finfo(sim.dtype).max
+                mask = repeat(mask, 'b j -> (b h) () j', h=h)
+                sim.masked_fill_(~mask, max_neg_value)
+
+            # attention, what we cannot get enough of
+            attn = sim.softmax(dim=-1)
+
+            out = einsum('b i j, b j d -> b i d', attn, v)
+            out = rearrange(out, '(b h) n d -> b n (h d)', h=h)
+            return self.to_out(out)
+
+class CrossAttention_Code(nn.Module):
+    def __init__(self, query_dim, context_dim=None, heads=8, dim_head=64, dropout=0.):
+        super().__init__()
+        inner_dim = dim_head * heads    # image为了后边的展开
+        context_dim = default(context_dim, query_dim)   # 其他的content
+
+        self.scale = dim_head ** -0.5
+        self.heads = heads
+
+        self.to_q = nn.Linear(query_dim, inner_dim, bias=False)
+        self.to_k = nn.Linear(context_dim, inner_dim, bias=False)
+        self.to_v = nn.Linear(context_dim, inner_dim, bias=False)
+        #定义全部展开的计算模型
+
+        self.to_out = nn.Sequential(
+            nn.Linear(inner_dim, query_dim),
+            nn.Dropout(dropout)
+        )
+        #给了一个简单的展开弄出来
+
+    def forward(self, x, context=None, mask=None):
+        h = self.heads
+
+        q = self.to_q(x)
+        context = default(context, x)
+        k = self.to_k(context)
+        v = self.to_v(context)
+
+        q, k, v = map(lambda t: rearrange(t, 'b n (h d) -> (b h) n d', h=h), (q, k, v))
+
+        sim = einsum('b i d, b j d -> b i j', q, k) * self.scale
+
+        if exists(mask):
+            mask = rearrange(mask, 'b ... -> b (...)')
+            max_neg_value = -torch.finfo(sim.dtype).max
+            mask = repeat(mask, 'b j -> (b h) () j', h=h)
+            sim.masked_fill_(~mask, max_neg_value)
+
+        # attention, what we cannot get enough of
+        attn = sim.softmax(dim=-1)
+
+        out = einsum('b i j, b j d -> b i d', attn, v)
+        out = rearrange(out, '(b h) n d -> b n (h d)', h=h)
+        return self.to_out(out)

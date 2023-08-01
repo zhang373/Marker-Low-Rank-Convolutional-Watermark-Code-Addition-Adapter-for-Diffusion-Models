@@ -525,7 +525,7 @@ class UNetModel(nn.Module):
         ch = model_channels
         ds = 1
         for level, mult in enumerate(channel_mult):
-            for _ in range(num_res_blocks):
+            for _ in range(num_res_blocks):     # num_res_blocks is preset number, stands for layer number
                 layers = [
                     ResBlock(
                         ch,
