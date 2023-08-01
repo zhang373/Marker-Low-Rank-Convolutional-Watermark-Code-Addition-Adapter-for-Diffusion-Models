@@ -1,4 +1,7 @@
-# Latent Diffusion Models
+# Marker: Low Rank Convolutional "Watermark-Code" Addition Adapter for Diffusion Models
+---    
+*Currently working on this based on LDM code*
+Latent Diffusion Models
 [arXiv](https://arxiv.org/abs/2112.10752) | [BibTeX](#bibtex)
 
 <p align="center">
