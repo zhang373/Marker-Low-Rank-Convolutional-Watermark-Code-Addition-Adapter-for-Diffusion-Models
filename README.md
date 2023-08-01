@@ -9,7 +9,8 @@ Latent Diffusion Models
 
 
 
-         
+---
+belows are ldm original md file
 [arXiv](https://arxiv.org/abs/2112.10752) | [BibTeX](#bibtex)
 
 <p align="center">
