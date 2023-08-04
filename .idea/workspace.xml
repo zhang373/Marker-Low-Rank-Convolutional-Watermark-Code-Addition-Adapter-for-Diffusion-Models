@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="29d5941e-790a-4ac4-86b1-5b2dbbccff54" name="变更" comment="">
-      <change afterPath="$PROJECT_DIR$/Pretrain_Marker.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestSpace.py" beforeDir="false" afterPath="$PROJECT_DIR$/TestSpace.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Workspace.py" beforeDir="false" afterPath="$PROJECT_DIR$/Workspace.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/latent_imagenet_diffusion.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/latent_imagenet_diffusion.ipynb" afterDir="false" />
-    </list>
+    <list default="true" id="29d5941e-790a-4ac4-86b1-5b2dbbccff54" name="变更" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -115,7 +109,7 @@
       <workItem from="1691152122419" duration="184000" />
       <workItem from="1691152799012" duration="338000" />
       <workItem from="1691153181490" duration="27000" />
-      <workItem from="1691153248922" duration="2234000" />
+      <workItem from="1691153248922" duration="3062000" />
     </task>
     <servers />
   </component>
