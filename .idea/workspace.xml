@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="29d5941e-790a-4ac4-86b1-5b2dbbccff54" name="变更" comment="">
-      <change afterPath="$PROJECT_DIR$/MarkerNet" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TestSpace.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Workspace.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ldm/modules/attention.py" beforeDir="false" afterPath="$PROJECT_DIR$/ldm/modules/attention.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ldm/modules/diffusionmodules/openaimodel.py" beforeDir="false" afterPath="$PROJECT_DIR$/ldm/modules/diffusionmodules/openaimodel.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Pretrain_Marker.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestSpace.py" beforeDir="false" afterPath="$PROJECT_DIR$/TestSpace.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Workspace.py" beforeDir="false" afterPath="$PROJECT_DIR$/Workspace.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/latent_imagenet_diffusion.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/latent_imagenet_diffusion.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,16 +31,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "E:/CV_NLP_Reasoning/Code/SS/stable_signature_tochang",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/CV_NLP_Reasoning/Code/Marker/MarkerNet_todo&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="TestSpace" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="MarkerNet_todo" />
@@ -90,6 +90,32 @@
       <workItem from="1690817414330" duration="4228000" />
       <workItem from="1690859594921" duration="1516000" />
       <workItem from="1690892001910" duration="226000" />
+      <workItem from="1690895592428" duration="38000" />
+      <workItem from="1690896401918" duration="13000" />
+      <workItem from="1690896441383" duration="120000" />
+      <workItem from="1690896588170" duration="1355000" />
+      <workItem from="1690900055315" duration="1045000" />
+      <workItem from="1690908227568" duration="604000" />
+      <workItem from="1690950015107" duration="1563000" />
+      <workItem from="1690957483068" duration="223000" />
+      <workItem from="1690957741467" duration="190000" />
+      <workItem from="1690957974421" duration="8419000" />
+      <workItem from="1690977636581" duration="8715000" />
+      <workItem from="1691083681086" duration="1269000" />
+      <workItem from="1691146358488" duration="24000" />
+      <workItem from="1691146668707" duration="57000" />
+      <workItem from="1691146757806" duration="19000" />
+      <workItem from="1691146845877" duration="229000" />
+      <workItem from="1691147175703" duration="61000" />
+      <workItem from="1691147278773" duration="41000" />
+      <workItem from="1691147326150" duration="4000" />
+      <workItem from="1691147363703" duration="669000" />
+      <workItem from="1691148645302" duration="26000" />
+      <workItem from="1691152056015" duration="43000" />
+      <workItem from="1691152122419" duration="184000" />
+      <workItem from="1691152799012" duration="338000" />
+      <workItem from="1691153181490" duration="27000" />
+      <workItem from="1691153248922" duration="2234000" />
     </task>
     <servers />
   </component>
@@ -108,7 +134,7 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/MarkerNet_todo$TestSpace.coverage" NAME="TestSpace 覆盖结果" MODIFIED="1690861525196" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/MarkerNet_todo$TestSpace.coverage" NAME="TestSpace 覆盖结果" MODIFIED="1690974422312" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/MarkerNet_todo$Workspace.coverage" NAME="Workspace 覆盖结果" MODIFIED="1690807316078" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
