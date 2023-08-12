@@ -22,6 +22,17 @@ import tqdm
 print("import OK")
 
 ########################################################################
+def Noise(x,i):
+    i = i % 10
+    if i<=1:
+        x = T1
+    elif 1 < i and i <=3:
+        x = T2
+    elif 3 < i and i<=5:
+        x = T3
+    else:
+        x = x
+    return x
 # define parser
 def parse():
     '''
@@ -46,7 +57,7 @@ def parse():
 
 ########################################################################
 # run the mode, train and test
-def run(args):
+def run(args,layernum=3):
     # import pdb; pdb.set_trace()
     device = 'cpu'
     ds = deeplake.load("hub://activeloop/tiny-imagenet-train")
@@ -58,21 +69,42 @@ def run(args):
     if c_in != args.input_channel:
         raise ValueError("Channel may be wrong! It's not 3!")
     code = ''.join([random.choice(['0', '1']) for _ in range(args.num_bits)])
-    MarkerNet = Workspace.Marker_pretrain_Net(Channel_in=c_in, Channel_mid=args.Channel_mid, Code=code, Adj_Cr_channels_Low=c_in).to(device)
-    print(MarkerNet)
+    if layernum == 8:
+        MarkerNet = Workspace.Marker_pretrain_Net_8(Channel_in=c_in, Channel_mid=args.Channel_mid,  Adj_Cr_channels_Low=c_in).to(device)
+        DecoderNet_F1 = Workspace.Decoder_Net(args.num_blocks, args.num_bits, args.Channel_mid)
+        DecoderNet_F2 = Workspace.Decoder_Net(args.num_blocks, args.num_bits, args.Channel_mid)
+        DecoderNet_F3 = Workspace.Decoder_Net(args.num_blocks, args.num_bits, args.Channel_mid*2)
+        DecoderNet_F4 = Workspace.Decoder_Net(args.num_blocks, args.num_bits, args.Channel_mid*4)
+        DecoderNet_Feature_List = nn.ModuleList([DecoderNet_F1,DecoderNet_F2,DecoderNet_F3,DecoderNet_F4])
+
+    elif layernum == 5:
+        MarkerNet = Workspace.Marker_pretrain_Net_5(Channel_in=c_in, Channel_mid=args.Channel_mid,
+                                                    Adj_Cr_channels_Low=c_in).to(device)
+        DecoderNet_F1 = Workspace.Decoder_Net(args.num_blocks, args.num_bits, args.Channel_mid)
+        DecoderNet_F2 = Workspace.Decoder_Net(args.num_blocks, args.num_bits, args.Channel_mid*2)
+        DecoderNet_F3 = Workspace.Decoder_Net(args.num_blocks, args.num_bits, args.Channel_mid*4)
+        DecoderNet_Feature_List = nn.ModuleList([DecoderNet_F1,DecoderNet_F2,DecoderNet_F3])
+
+    elif layernum == 3:
+        MarkerNet = Workspace.Marker_pretrain_Net_3(Channel_in=c_in, Channel_mid=args.Channel_mid,
+                                                    Adj_Cr_channels_Low=c_in).to(device)
+        DecoderNet_F1 = Workspace.Decoder_Net(args.num_blocks, args.num_bits, args.Channel_mid*2)
+        DecoderNet_F2 = Workspace.Decoder_Net(args.num_blocks, args.num_bits, args.Channel_mid*4)
+        DecoderNet_Feature_List = nn.ModuleList([DecoderNet_F1,DecoderNet_F2])
+    else:
+        assert ("Wrong layer number of CrossLowR, should be one of 8,5,3")
+    print(MarkerNet, DecoderNet_Feature_List)
 
     # define DecoderNet
     # the muli number, please refer: https://pic1.zhimg.com/v2-7476bc68a913afd13a2e4483a8869a04_r.jpg
-    DecoderNet_F1 = Workspace.Decoder_Net(args.num_blocks, args.num_bits, args.Channel_mid)
-    DecoderNet_F2 = Workspace.Decoder_Net(args.num_blocks, args.num_bits, args.Channel_mid)
-    DecoderNet_F3 = Workspace.Decoder_Net(args.num_blocks, args.num_bits, args.Channel_mid*2)
-    DecoderNet_F4 = Workspace.Decoder_Net(args.num_blocks, args.num_bits, args.Channel_mid*4)
-    DecoderNet_Feature_List = nn.ModuleList([DecoderNet_F1,DecoderNet_F2,DecoderNet_F3,DecoderNet_F4])
     DecoderNet_I = Workspace.Decoder_Net(args.num_blocks * 2, args.num_bits, args.Channel_in)
 
     # define optimizer, use adam
-    optimizer = torch.optim.Adam(MarkerNet.parameters(), lr=args.lr)
-
+    optimizer = torch.optim.Adam([
+        {'params': MarkerNet.parameters(), 'lr': 0.001, },
+        {'params': DecoderNet_Feature_List.parameters(), 'lr': 0.001,},
+        {'params': DecoderNet_I.parameters(), 'lr': 0.001,}
+    ])
     # VAE Encoder part
     print(f'>>> Building LDM model with config {args.ldm_config} and weights from {args.ldm_ckpt}...')
     config = OmegaConf.load(f"{args.ldm_config}")
@@ -104,7 +136,8 @@ def run(args):
                 with torch.no_grad():
                     x = x_str[-1]
                     x = ldm_ae.decode(x) # todo: find the VAE Decoder
-                loss += MarkerNet.CodeAcc_loss(x, code, DecoderNet_I)
+                X_n = Noise(x, i)
+                loss += MarkerNet.CodeAcc_loss(X_n, code, DecoderNet_I)
 
                 loss.backward()
                 optimizer.step()

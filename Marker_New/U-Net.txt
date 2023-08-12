@@ -1,0 +1,112 @@
+
+UNetModel_ForFineTune(
+# todo: input blocks
+(input_blocks): ModuleList(
+        (0): TimestepEmbedSequential(
+                (0): Conv2d(4, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)))
+
+        # todo: add CrossLowR in 320
+
+        (1): TimestepEmbedSequential(
+                (0): ResBlock(320,320)
+                (1): SpatialTransformer(320, 320)
+        (2): TimestepEmbedSequential(
+                (0): ResBlock(320,320)
+                (1): SpatialTransformer(320,320)
+        (3): TimestepEmbedSequential(
+                (0): Downsample(
+                (op): Conv2d(320, 320, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1)))
+
+        # todo: add CorssLowR in 320
+
+        (4): TimestepEmbedSequential(
+                (0): ResBlock(320, 640)
+                (1): SpatialTransformer(640,640)
+        (5): TimestepEmbedSequential(
+                (0): ResBlock(640, 640)
+                (1): SpatialTransformer(640,640)
+        (6): TimestepEmbedSequential(
+                (0): Downsample(
+                (op): Conv2d(640, 640, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1)))
+
+        # todo: add CorssLowR in 640
+
+        (7): TimestepEmbedSequential(
+                (0): ResBlock(640,1280)
+                (1): SpatialTransformer(1280,1280)
+        (8): TimestepEmbedSequential(
+                (0): ResBlock(1280,1280)
+                (1): SpatialTransformer(1280,1280)
+        (9): TimestepEmbedSequential(
+                (0): Downsample(
+                (op): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1)))
+
+
+        (10): TimestepEmbedSequential(
+                (0): ResBlock(1280,1280)
+        (11): TimestepEmbedSequential(
+                (0): ResBlock(1280,1280)
+
+# todo: mid blocks
+(middle_block): TimestepEmbedSequential(
+
+        # todo: add CorssLowR in 1280
+        (0): ResBlock(1280,1280)
+        (1): SpatialTransformer(1280,1280)
+        (2): ResBlock(1280,1280)
+        # todo: add CorssLowR in 1280
+
+
+
+# todo: output blocks
+(output_blocks): ModuleList(
+        (0): TimestepEmbedSequential(
+                (0): ResBlock(2560,1280)
+                # 是因为skip connection导致的输入维度变大,有两个，一个是正常的，一个是增大的，这里是增大的，只用看输出c就行
+        (1): TimestepEmbedSequential(
+                (0): ResBlock(2560,1280)
+        (2): TimestepEmbedSequential(
+                (0): ResBlock(2560,1280)
+                (1): Upsample(
+                (conv): Conv2d(1280, 1280, kernel_size = (3, 3), stride=(1, 1), padding=(1, 1)))
+
+        # todo: add CorssLowR in 1280
+
+        (3): TimestepEmbedSequential(
+                (0): ResBlock(2560,1280)
+                (1): SpatialTransformer(1280,1280)
+        (4): TimestepEmbedSequential(
+                (0): ResBlock(2560,1280)
+                (1): SpatialTransformer(1280,1280)
+        (5): TimestepEmbedSequential(
+                (0): ResBlock(1920,1280)
+                (1): SpatialTransformer(1280, 1280)
+                (2): Upsample(
+                (conv): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)))
+
+        # todo: add CrossLowR in 1280
+
+        (6): TimestepEmbedSequential(
+                (0): ResBlock(1920, 640)
+                (1): SpatialTransformer(640, 640)
+        (7): TimestepEmbedSequential(
+                (0): ResBlock(1280, 640)
+                (1): SpatialTransformer(640,640)
+        (8): TimestepEmbedSequential(
+                (0): ResBlock(960, 640)
+                (1): SpatialTransformer(640, 640)
+                (2): Upsample(
+                (conv): Conv2d(640, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)))
+
+        # todo: add CrossLowR in 640
+
+        (9): TimestepEmbedSequential(
+                (0): ResBlock(960,320)
+                (1): SpatialTransformer(320,320)
+        (10): TimestepEmbedSequential(
+                (0): ResBlock(640, 320)
+                (1): SpatialTransformer(320, 320)
+        (11): TimestepEmbedSequential(
+                (0): ResBlock(640,320)
+                (1): SpatialTransformer(320,320)
+        (out): Sequential(320,4)

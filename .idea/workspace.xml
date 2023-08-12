@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="29d5941e-790a-4ac4-86b1-5b2dbbccff54" name="变更" comment="" />
+    <list default="true" id="29d5941e-790a-4ac4-86b1-5b2dbbccff54" name="变更" comment="">
+      <change afterPath="$PROJECT_DIR$/Marker_Finetune.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Train_finetuneNet.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/U-Net.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pretrain_Marker.py" beforeDir="false" afterPath="$PROJECT_DIR$/Pretrain_Marker.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Workspace.py" beforeDir="false" afterPath="$PROJECT_DIR$/Workspace.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,13 +37,20 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/CV_NLP_Reasoning/Code/Marker/MarkerNet_todo&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/CV_NLP_Reasoning/Code/Marker/MarkerNet_todo/Marker_Finetune.py&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
 }</component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings>
+        <option name="useSoftWraps" value="true" />
+      </console-settings>
+    </option>
+  </component>
   <component name="RunManager">
-    <configuration name="TestSpace" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+    <configuration name="Marker_Finetune" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="MarkerNet_todo" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -49,7 +63,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/TestSpace.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Marker_Finetune.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -109,7 +123,15 @@
       <workItem from="1691152122419" duration="184000" />
       <workItem from="1691152799012" duration="338000" />
       <workItem from="1691153181490" duration="27000" />
-      <workItem from="1691153248922" duration="3062000" />
+      <workItem from="1691153248922" duration="3341000" />
+      <workItem from="1691213042708" duration="2314000" />
+      <workItem from="1691559817703" duration="12370000" />
+      <workItem from="1691582917042" duration="4723000" />
+      <workItem from="1691589172591" duration="176000" />
+      <workItem from="1691729916981" duration="18158000" />
+      <workItem from="1691818119490" duration="944000" />
+      <workItem from="1691824224586" duration="3136000" />
+      <workItem from="1691828225245" duration="1339000" />
     </task>
     <servers />
   </component>
@@ -128,7 +150,8 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/MarkerNet_todo$TestSpace.coverage" NAME="TestSpace 覆盖结果" MODIFIED="1690974422312" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/MarkerNet_todo$Marker_Finetune.coverage" NAME="Marker_Finetune 覆盖结果" MODIFIED="1691576292491" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/MarkerNet_todo$TestSpace.coverage" NAME="Marker_Finetune 覆盖结果" MODIFIED="1691747573547" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/MarkerNet_todo$Workspace.coverage" NAME="Workspace 覆盖结果" MODIFIED="1690807316078" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
