@@ -174,9 +174,9 @@ class CrossAttention(nn.Module):
         context = default(context, x)
         k = self.to_k(context)
         v = self.to_v(context)
-        print("qkv177:", k.shape,q.shape, v.shape)
+        #print("qkv177:", k.shape,q.shape, v.shape)
         q, k, v = map(lambda t: rearrange(t, 'b n (h d) -> (b h) n d', h=h), (q, k, v))
-        print("qkv179:", k.shape, q.shape, v.shape)
+        #print("qkv179:", k.shape, q.shape, v.shape)
         sim = einsum('b i d, b j d -> b i j', q, k) * self.scale
 
         if exists(mask):
@@ -228,7 +228,7 @@ class SpatialTransformer(nn.Module):
         super().__init__()
         self.in_channels = in_channels
         inner_dim = n_heads * d_head
-        print("in_chinal in Attention:", in_channels)
+        #print("in_chinal in Attention:", in_channels)
         self.norm = Normalize(in_channels)
 
         self.proj_in = nn.Conv2d(in_channels,
@@ -286,7 +286,7 @@ class SpatialTransformer(nn.Module):
             context = default(context, x)
             k = self.to_k(context)
             v = self.to_v(context)
-            print("The Shape: ",k.shape,q.shape,v.shape)
+            #print("The Shape: ",k.shape,q.shape,v.shape)
             q, k, v = map(lambda t: rearrange(t, 'b n (h d) -> (b h) n d', h=h), (q, k, v))
 
             sim = einsum('b i d, b j d -> b i j', q, k) * self.scale

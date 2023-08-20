@@ -2,15 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="29d5941e-790a-4ac4-86b1-5b2dbbccff54" name="变更" comment="">
-      <change afterPath="$PROJECT_DIR$/Marker_New/DDPM_Readme.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Marker_New/marker_finetune.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Marker_New/Tiny_Imagenet.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Marker_New/Marker_Finetune.py" beforeDir="false" afterPath="$PROJECT_DIR$/Marker_New/Marker_Finetune.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Marker_New/Pretrain_Marker.py" beforeDir="false" afterPath="$PROJECT_DIR$/Marker_New/Pretrain_Marker.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Marker_New/TestSpace.py" beforeDir="false" afterPath="$PROJECT_DIR$/Marker_New/TestSpace.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Marker_New/Train_finetuneNet.py" beforeDir="false" afterPath="$PROJECT_DIR$/Marker_New/Train_finetuneNet.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Marker_New/Workspace.py" beforeDir="false" afterPath="$PROJECT_DIR$/Marker_New/Workspace.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ldm/models/diffusion/ddpm.py" beforeDir="false" afterPath="$PROJECT_DIR$/ldm/models/diffusion/ddpm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ldm/models/autoencoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/ldm/models/autoencoder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ldm/modules/attention.py" beforeDir="false" afterPath="$PROJECT_DIR$/ldm/modules/attention.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,8 +17,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="Blank Requirements File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -41,7 +38,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "E:/CV_NLP_Reasoning/Code/Marker/MarkerNet_todo/Marker_New/Workspace.py",
+    "last_opened_file_path": "E:/CV_NLP_Reasoning/Code/Marker/MarkerNet_todo/Marker_New/Pretrain_Marker.py",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
@@ -59,7 +56,7 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="Workspace" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+    <configuration name="Pretrain_Marker" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="MarkerNet_todo" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -72,7 +69,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Marker_New/Workspace.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Marker_New/Pretrain_Marker.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -147,7 +144,8 @@
       <workItem from="1692066279706" duration="10781000" />
       <workItem from="1692091482594" duration="1581000" />
       <workItem from="1692093641407" duration="1160000" />
-      <workItem from="1692514745399" duration="3672000" />
+      <workItem from="1692514745399" duration="4311000" />
+      <workItem from="1692519367963" duration="13914000" />
     </task>
     <servers />
   </component>
@@ -168,6 +166,6 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/MarkerNet_todo$Marker_Finetune.coverage" NAME="Marker_Finetune 覆盖结果" MODIFIED="1691576292491" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/MarkerNet_todo$TestSpace.coverage" NAME="TestSpace 覆盖结果" MODIFIED="1692092804511" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Marker_New" />
-    <SUITE FILE_PATH="coverage/MarkerNet_todo$Workspace.coverage" NAME="Workspace 覆盖结果" MODIFIED="1692517650768" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Marker_New" />
+    <SUITE FILE_PATH="coverage/MarkerNet_todo$Workspace.coverage" NAME="Pretrain_Marker 覆盖结果" MODIFIED="1692529453294" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Marker_New" />
   </component>
 </project>

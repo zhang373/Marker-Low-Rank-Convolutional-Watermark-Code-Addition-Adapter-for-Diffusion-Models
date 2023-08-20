@@ -88,7 +88,7 @@ class CrossLowR_Net(nn.Module):
             self.op = avg_pool_nd(dims, kernel_size=self.stride, stride=self.stride)
 
     def forward(self, x, Code, bs=1):
-        print("Check input", x.shape[1],self.Cr_channels_in)
+        #("Check input", x.shape[1], self.Cr_channels_in)
         assert x.shape[1] == self.Cr_channels_in
         CodeNet = CodeEmb_Net(Code,batchsize= bs)
         CodeEmb = CodeNet.forward()
@@ -129,12 +129,12 @@ class Marker_pretrain_Net_8(nn.Module):
         # For Down Blocks
         self.Down_Net_1 = conv_nd(2, self.Channel_in, self.Channel_mid, 3, padding=1)
         self.Down_Net_2 = CrossLowR_Net(True, self.Channel_mid, self.Adj_Cr_channels_Low)
-        self.DownSample_Net_1 = Downsample( self.Channel_mid**self.ChannelScaleFactor[0], True,
+        self.DownSample_Net_1 = Downsample( self.Channel_mid * self.ChannelScaleFactor[0], True,
                                             dims=2, out_channels=self.Channel_mid*self.ChannelScaleFactor[0])
 
-        self.Down_Net_3 = CrossLowR_Net(True,  self.Channel_mid*self.ChannelScaleFactor[0],
+        self.Down_Net_3 = CrossLowR_Net(True,  self.Channel_mid * self.ChannelScaleFactor[0],
                                         self.Adj_Cr_channels_Low)
-        self.DownSample_Net_2 = Downsample(self.Channel_mid ** self.ChannelScaleFactor[0], True,
+        self.DownSample_Net_2 = Downsample(self.Channel_mid * self.ChannelScaleFactor[0], True,
                                            dims=2, out_channels=self.Channel_mid * self.ChannelScaleFactor[1])
 
         self.Down_Net_4 = CrossLowR_Net(True, self.Channel_mid * self.ChannelScaleFactor[1],
@@ -156,19 +156,19 @@ class Marker_pretrain_Net_8(nn.Module):
 
         # For Up block
         #else Upsample(ch, conv_resample, dims=dims, out_channels=out_ch)
-        self.UpSample_Net_1 = Upsample(self.Channel_mid ** self.ChannelScaleFactor[2], True,
+        self.UpSample_Net_1 = Upsample(self.Channel_mid * self.ChannelScaleFactor[2], True,
                                            dims=2, out_channels=self.Channel_mid * self.ChannelScaleFactor[2])
         self.Up_Net_1 = CrossLowR_Net(True, self.Channel_mid*self.ChannelScaleFactor[2],
                                       self.Adj_Cr_channels_Low)
 
-        self.UpSample_Net_2 = Upsample(self.Channel_mid ** self.ChannelScaleFactor[2], True,
+        self.UpSample_Net_2 = Upsample(self.Channel_mid * self.ChannelScaleFactor[2], True,
                                        dims=2, out_channels=self.Channel_mid * self.ChannelScaleFactor[2])
         self.Up_Net_2 = CrossLowR_Net(True, self.Channel_mid*self.ChannelScaleFactor[2],
                                       self.Adj_Cr_channels_Low)
 
-        self.UpSample_Net_3 = Upsample(self.Channel_mid ** self.ChannelScaleFactor[2], True,
+        self.UpSample_Net_3 = Upsample(self.Channel_mid * self.ChannelScaleFactor[2], True,
                                        dims=2, out_channels=self.Channel_mid * self.ChannelScaleFactor[1])
-        self.Up_Net_3 = CrossLowR_Net(True, self.Channel_mid*self.ChannelScaleFactor[1],
+        self.Up_Net_3 = CrossLowR_Net(True, self.Channel_mid*self.ChannelScaleFactor[2],
                                       self.Adj_Cr_channels_Low)
         self.Up_Net_4 = conv_nd(2, self.Channel_mid *2, self.Channel_in, 3, padding=1)
         self.output_blocks = nn.ModuleList([self.Up_Net_1,self.UpSample_Net_1,
@@ -190,13 +190,13 @@ class Marker_pretrain_Net_8(nn.Module):
 
         # for mid blocks
         for i in range(2):
-            x, mask_i = self.input_blocks[i](x, code)
+            x, mask_i = self.mid_blocks[i](x, code)
             mask.append(mask_i)
             x_str.append(x)
 
         # for up blocks
         for i in range(7):
-            if (i == 1 or i == 3 or i == 5):
+            if (i == 0 or i == 2 or i == 4):
                 x, mask_i = self.output_blocks[i](x, code)
                 mask.append(mask_i)
                 x_str.append(x)
@@ -310,11 +310,11 @@ class Marker_pretrain_Net_3(nn.Module):
         # For Down Blocks
         self.Down_Net_1 = conv_nd(2, self.Channel_in, self.Channel_mid, 3, padding=1)
         #self.Down_Net_2 = CrossLowR_Net(True, self.Channel_mid, self.Adj_Cr_channels_Low)
-        self.DownSample_Net_1 = Downsample( self.Channel_mid**self.ChannelScaleFactor[0], True,
+        self.DownSample_Net_1 = Downsample( self.Channel_mid * self.ChannelScaleFactor[0], True,
                                             dims=2, out_channels=self.Channel_mid*self.ChannelScaleFactor[0])
 
         #self.Down_Net_3 = CrossLowR_Net(True,  self.Channel_mid*self.ChannelScaleFactor[0],self.Adj_Cr_channels_Low)
-        self.DownSample_Net_2 = Downsample(self.Channel_mid ** self.ChannelScaleFactor[0], True,
+        self.DownSample_Net_2 = Downsample(self.Channel_mid * self.ChannelScaleFactor[0], True,
                                            dims=2, out_channels=self.Channel_mid * self.ChannelScaleFactor[1])
 
         self.Down_Net_4 = CrossLowR_Net(True, self.Channel_mid * self.ChannelScaleFactor[1],
@@ -332,24 +332,24 @@ class Marker_pretrain_Net_3(nn.Module):
 
         # For Up block
         #else Upsample(ch, conv_resample, dims=dims, out_channels=out_ch)
-        self.UpSample_Net_1 = Upsample(self.Channel_mid ** self.ChannelScaleFactor[2], True,
+        self.UpSample_Net_1 = Upsample(self.Channel_mid * self.ChannelScaleFactor[2], True,
                                            dims=2, out_channels=self.Channel_mid * self.ChannelScaleFactor[2])
         # self.Up_Net_1 = CrossLowR_Net(True, self.Channel_mid*self.ChannelScaleFactor[2],self.Adj_Cr_channels_Low)
 
-        self.UpSample_Net_2 = Upsample(self.Channel_mid ** self.ChannelScaleFactor[2], True,
+        self.UpSample_Net_2 = Upsample(self.Channel_mid * self.ChannelScaleFactor[2], True,
                                        dims=2, out_channels=self.Channel_mid * self.ChannelScaleFactor[2])
         # self.Up_Net_2 = CrossLowR_Net(True, self.Channel_mid*self.ChannelScaleFactor[2], self.Adj_Cr_channels_Low)
 
-        self.UpSample_Net_3 = Upsample(self.Channel_mid ** self.ChannelScaleFactor[2], True,
+        self.UpSample_Net_3 = Upsample(self.Channel_mid * self.ChannelScaleFactor[2], True,
                                        dims=2, out_channels=self.Channel_mid * self.ChannelScaleFactor[1])
-        self.Up_Net_3 = CrossLowR_Net(True, self.Channel_mid*self.ChannelScaleFactor[1],
+        self.Up_Net_3 = CrossLowR_Net(True, self.Channel_mid*self.ChannelScaleFactor[2],
                                       self.Adj_Cr_channels_Low)
         self.Up_Net_4 = conv_nd(2, self.Channel_mid * 2, self.Channel_in, 3, padding=1)
         self.output_blocks = nn.ModuleList([self.UpSample_Net_1, self.UpSample_Net_2,
                                             self.Up_Net_3, self.UpSample_Net_3,
                                             self.Up_Net_4])
 
-    def forward(self,x, code):
+    def forward(self, x, code):
         mask = []
         x_str = [x]
         # for input blocks
@@ -363,18 +363,19 @@ class Marker_pretrain_Net_3(nn.Module):
 
         # for mid blocks
         for i in range(1):
-            x, mask_i = self.input_blocks[i](x,code)
+            x, mask_i = self.mid_blocks[i](x, code)
             mask.append(mask_i)
             x_str.append(x)
 
         # for up blocks
         for i in range(5):
-            if i == 3:
-                x, mask_i = self.input_blocks[i](x, code)
+            #print("Outblocks of ", i, ": ", self.output_blocks[i])
+            if i == 2:
+                x, mask_i = self.output_blocks[i](x, code)
                 mask.append(mask_i)
                 x_str.append(x)
             else:
-                x = self.input_blocks[i](x)
+                x = self.output_blocks[i](x)
         return mask, x_str
 
     def Mask_loss(self, mask):
@@ -433,12 +434,12 @@ class Marker_pretrain_Net_5(nn.Module):
         # For Down Blocks
         self.Down_Net_1 = conv_nd(2, self.Channel_in, self.Channel_mid, 3, padding=1)
         #self.Down_Net_2 = CrossLowR_Net(True, self.Channel_mid, self.Adj_Cr_channels_Low)
-        self.DownSample_Net_1 = Downsample( self.Channel_mid**self.ChannelScaleFactor[0], True,
+        self.DownSample_Net_1 = Downsample( self.Channel_mid*self.ChannelScaleFactor[0], True,
                                             dims=2, out_channels=self.Channel_mid*self.ChannelScaleFactor[0])
 
         self.Down_Net_3 = CrossLowR_Net(True,  self.Channel_mid*self.ChannelScaleFactor[0],
                                         self.Adj_Cr_channels_Low)
-        self.DownSample_Net_2 = Downsample(self.Channel_mid ** self.ChannelScaleFactor[0], True,
+        self.DownSample_Net_2 = Downsample(self.Channel_mid * self.ChannelScaleFactor[0], True,
                                            dims=2, out_channels=self.Channel_mid * self.ChannelScaleFactor[1])
 
         self.Down_Net_4 = CrossLowR_Net(True, self.Channel_mid * self.ChannelScaleFactor[1],
@@ -457,19 +458,19 @@ class Marker_pretrain_Net_5(nn.Module):
 
         # For Up block
         #else Upsample(ch, conv_resample, dims=dims, out_channels=out_ch)
-        self.UpSample_Net_1 = Upsample(self.Channel_mid ** self.ChannelScaleFactor[2], True,
+        self.UpSample_Net_1 = Upsample(self.Channel_mid * self.ChannelScaleFactor[2], True,
                                            dims=2, out_channels=self.Channel_mid * self.ChannelScaleFactor[2])
         #self.Up_Net_1 = CrossLowR_Net(True, self.Channel_mid*self.ChannelScaleFactor[2],
                                       #self.Adj_Cr_channels_Low)
 
-        self.UpSample_Net_2 = Upsample(self.Channel_mid ** self.ChannelScaleFactor[2], True,
+        self.UpSample_Net_2 = Upsample(self.Channel_mid * self.ChannelScaleFactor[2], True,
                                        dims=2, out_channels=self.Channel_mid * self.ChannelScaleFactor[2])
         self.Up_Net_2 = CrossLowR_Net(True, self.Channel_mid*self.ChannelScaleFactor[2],
                                       self.Adj_Cr_channels_Low)
 
-        self.UpSample_Net_3 = Upsample(self.Channel_mid ** self.ChannelScaleFactor[2], True,
+        self.UpSample_Net_3 = Upsample(self.Channel_mid * self.ChannelScaleFactor[2], True,
                                        dims=2, out_channels=self.Channel_mid * self.ChannelScaleFactor[1])
-        self.Up_Net_3 = CrossLowR_Net(True, self.Channel_mid*self.ChannelScaleFactor[1],
+        self.Up_Net_3 = CrossLowR_Net(True, self.Channel_mid*self.ChannelScaleFactor[2],
                                       self.Adj_Cr_channels_Low)
         self.Up_Net_4 = conv_nd(2, self.Channel_mid *2, self.Channel_in, 3, padding=1)
         self.output_blocks = nn.ModuleList([self.UpSample_Net_1,
@@ -491,13 +492,13 @@ class Marker_pretrain_Net_5(nn.Module):
 
         # for mid blocks
         for i in range(1):
-            x, mask_i = self.input_blocks[i](x, code)
+            x, mask_i = self.mid_blocks[i](x, code)
             mask.append(mask_i)
             x_str.append(x)
 
         # for up blocks
         for i in range(6):
-            if (i == 2 or i == 4):
+            if (i == 1 or i == 3):
                 x, mask_i = self.output_blocks[i](x, code)
                 mask.append(mask_i)
                 x_str.append(x)
@@ -553,7 +554,6 @@ img = torch.randn(size)
 code ="0010011"
 TestCodeNet=CodeEmb_Net(code,)
 TestCodeNet.forward()
-TestNet = CrossLowR_Net(use_conv=True, Cr_channels_in = 4, Adj_Cr_channels_Low = 2,
-                      Adj_Cr_n_heads=4, Adj_Cr_d_head=4, dims=2, padding='same')
-print(TestNet.forward(img,code))
-TN = Marker_pretrain_Net_3(Channel_in=4, Channel_mid=320, Adj_Cr_channels_Low=30)
+TN = Marker_pretrain_Net_8(Channel_in=4, Channel_mid=320, Adj_Cr_channels_Low=30)
+#print(TN.output_blocks)
+#print(TN.forward(img, code))
