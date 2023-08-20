@@ -420,7 +420,7 @@ class DDPM(pl.LightningModule):
         opt = torch.optim.AdamW(params, lr=lr)
         return opt
 
-
+# todo: 这个地方要改一下U_net用的东西
 class LatentDiffusion(DDPM):
     """main class"""
     def __init__(self,
@@ -888,8 +888,8 @@ class LatentDiffusion(DDPM):
 
         return [rescale_bbox(b) for b in bboxes]
 
-    def apply_model(self, x_noisy, t, cond, return_ids=False):
-
+# todo: 看一下这个地方，重点看一下怎么把marker送进去, 这个函数是被改过的！
+    def apply_model(self, x_noisy, t, cond, return_ids=False, Marker=None, code=None, IsMarker=False):
         if isinstance(cond, dict):
             # hybrid case, cond is exptected to be a dict
             pass
@@ -984,7 +984,11 @@ class LatentDiffusion(DDPM):
             x_recon = fold(o) / normalization
 
         else:
-            x_recon = self.model(x_noisy, t, **cond)
+            if IsMarker:
+                x_recon = self.model(x_noisy, t, **cond, Marker=Marker, IsMarker=IsMarker, code=code)
+                # forward: self, x, t, Marker=None, code=None, IsMarker=False, c_concat: list = None, c_crossattn: list = None
+            else:
+                x_recon = self.model(x_noisy, t, **cond)
 
         if isinstance(x_recon, tuple) and not return_ids:
             return x_recon[0]
@@ -1391,33 +1395,52 @@ class LatentDiffusion(DDPM):
         x = 2. * (x - x.min()) / (x.max() - x.min()) - 1.
         return x
 
-
+# Todo: 这里改过
 class DiffusionWrapper(pl.LightningModule):
     def __init__(self, diff_model_config, conditioning_key):
         super().__init__()
-        self.diffusion_model = instantiate_from_config(diff_model_config)
+        self.diffusion_model = instantiate_from_config(diff_model_config)   #这个就是U-Net
         self.conditioning_key = conditioning_key
         assert self.conditioning_key in [None, 'concat', 'crossattn', 'hybrid', 'adm']
 
-    def forward(self, x, t, c_concat: list = None, c_crossattn: list = None):
+    # 这个地方传了forward函数
+    def forward(self, x, t, c_concat: list = None, c_crossattn: list = None, Marker=None, code=None, IsMarker=False,):
         if self.conditioning_key is None:
-            out = self.diffusion_model(x, t)
+            if IsMarker:
+                out = self.diffusion_model(x=x, code=code, Marker=Marker, timesteps=t)
+            else:
+                out = self.diffusion_model(x, t)
+
         elif self.conditioning_key == 'concat':
             xc = torch.cat([x] + c_concat, dim=1)
-            out = self.diffusion_model(xc, t)
+            if IsMarker:
+                out = self.diffusion_model(x=xc, code=code, Marker=Marker, timesteps=t)
+            else:
+                out = self.diffusion_model(xc, t)
+
         elif self.conditioning_key == 'crossattn':
             cc = torch.cat(c_crossattn, 1)
-            out = self.diffusion_model(x, t, context=cc)
+            if IsMarker:
+                out = self.diffusion_model(x=x, code=code, Marker=Marker, timesteps=t, context=cc)
+            else:
+                out = self.diffusion_model(x, t, context=cc)
+
         elif self.conditioning_key == 'hybrid':
             xc = torch.cat([x] + c_concat, dim=1)
             cc = torch.cat(c_crossattn, 1)
-            out = self.diffusion_model(xc, t, context=cc)
+            if IsMarker:
+                out = self.diffusion_model(x=xc, code=code, Marker=Marker, timesteps=t, context=cc)
+            else:
+                out = self.diffusion_model(xc, t, context=cc)
+
         elif self.conditioning_key == 'adm':
             cc = c_crossattn[0]
-            out = self.diffusion_model(x, t, y=cc)
+            if IsMarker:
+                out = self.diffusion_model(x=x, code=code, Marker=Marker, timesteps=t, y=cc)
+            else:
+                out = self.diffusion_model(x, t, y=cc)
         else:
             raise NotImplementedError()
-
         return out
 
 

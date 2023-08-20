@@ -70,6 +70,7 @@ def run(args,layernum=3):
         raise ValueError("Channel may be wrong! It's not 3!")
     code = ''.join([random.choice(['0', '1']) for _ in range(args.num_bits)])
     if layernum == 8:
+        # the muli number, please refer: https://pic1.zhimg.com/v2-7476bc68a913afd13a2e4483a8869a04_r.jpg
         MarkerNet = Workspace.Marker_pretrain_Net_8(Channel_in=c_in, Channel_mid=args.Channel_mid,  Adj_Cr_channels_Low=c_in).to(device)
         DecoderNet_F1 = Workspace.Decoder_Net(args.num_blocks, args.num_bits, args.Channel_mid)
         DecoderNet_F2 = Workspace.Decoder_Net(args.num_blocks, args.num_bits, args.Channel_mid)
@@ -96,7 +97,6 @@ def run(args,layernum=3):
     print(MarkerNet, DecoderNet_Feature_List)
 
     # define DecoderNet
-    # the muli number, please refer: https://pic1.zhimg.com/v2-7476bc68a913afd13a2e4483a8869a04_r.jpg
     DecoderNet_I = Workspace.Decoder_Net(args.num_blocks * 2, args.num_bits, args.Channel_in)
 
     # define optimizer, use adam
@@ -148,6 +148,10 @@ def run(args,layernum=3):
                     running_loss = 0
 
             # save model and test on the validation set
+            torch.save(MarkerNet, 'Markernet.pt')
+            torch.save(DecoderNet_Feature_List, 'DecoderNet_Feature_List.pt')
+            torch.save(DecoderNet_I, 'DecoderNet_I.pt')
+
             if (epoch+1) % args.eval_epochs == 0:
                 # validation
                 print("begin validation:")

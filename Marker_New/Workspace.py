@@ -55,7 +55,7 @@ class CodeEmb_Net(nn.Module):
         return CodeEmb.repeat(self.batch_size, 1, 1)
 
 class CrossLowR_Net(nn.Module):
-    def __init__(self, use_conv, Cr_channels_in, Adj_Cr_channels_Low, Adj_Cr_n_heads=8,
+    def __init__(self, use_conv, Cr_channels_in, Adj_Cr_channels_Low, Code_dim=900, Adj_Cr_n_heads=8,
                  Adj_Cr_d_head=8, dims=2, padding='same'):
         super(CrossLowR_Net, self).__init__()
         self.Cr_channels_in = Cr_channels_in
@@ -66,7 +66,7 @@ class CrossLowR_Net(nn.Module):
         self.stride = 1
         #Coder = CodeEmb_Net(Code,batchsize)
         #self.CodeEmb = Coder.forward()
-        #self.Code_dim = self.CodeEmb.shape[-1]
+        self.Code_dim = Code_dim
         #print("self.Code_dim: ",self.Code_dim)
         self.Adj_Cr_n_heads = Adj_Cr_n_heads
         self.Adj_Cr_d_head = Adj_Cr_d_head
@@ -100,8 +100,11 @@ class CrossLowR_Net(nn.Module):
         x_in = x
         if self.use_conv:
             x = self.op_down(x)
+            x = torch.tanh(x)
             x = self.attn2(x, CodeEmb)
+            x = torch.tanh(x)
             x = self.op_mid(x)
+            x = torch.tanh(x)
             x = self.op_up(x)
             mask = x - x_in
             return x, mask
@@ -550,6 +553,7 @@ img = torch.randn(size)
 code ="0010011"
 TestCodeNet=CodeEmb_Net(code,)
 TestCodeNet.forward()
-#TestNet=CrossLowR_Net(use_conv=True, Cr_channels_in = 4, Adj_Cr_channels_Low = 2,
-                      #Adj_Cr_n_heads=4, Adj_Cr_d_head=4, dims=2, padding='same')
-#TestNet.forward(img,code)
+TestNet = CrossLowR_Net(use_conv=True, Cr_channels_in = 4, Adj_Cr_channels_Low = 2,
+                      Adj_Cr_n_heads=4, Adj_Cr_d_head=4, dims=2, padding='same')
+print(TestNet.forward(img,code))
+TN = Marker_pretrain_Net_3(Channel_in=4, Channel_mid=320, Adj_Cr_channels_Low=30)

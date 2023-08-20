@@ -330,7 +330,7 @@ class UNetModel_ForFineTune(nn.Module):
 
 
 
-    def forward(self, x, code, timesteps=None, context=None, y=None,**kwargs):
+    def forward(self, x, code, Marker, timesteps=None, context=None, y=None,**kwargs):
         """
         Apply the model to an input batch.
         :param x: an [N x C x ...] Tensor of inputs.
@@ -374,11 +374,11 @@ class UNetModel_ForFineTune(nn.Module):
 
 
             # for mid part
-            _, mask = self.Marker.Mid_Net_1.forward(h, code)
+            _, mask = Marker.Mid_Net_1.forward(h, code)
             h += mask
             with th.no_grad():
                 h = self.middle_block(h, emb, context)
-            _, mask = self.Marker.Mid_Net_2.forward(h, code)
+            _, mask = Marker.Mid_Net_2.forward(h, code)
             h += mask
 
             # for out part
@@ -421,7 +421,7 @@ class UNetModel_ForFineTune(nn.Module):
 
 
             # for mid part
-            _, mask = self.Marker.Mid_Net_1.forward(h, code)
+            _, mask = Marker.Mid_Net_1.forward(h, code)
             h += mask
             with th.no_grad():
                 h = self.middle_block(h, emb, context)
@@ -461,7 +461,7 @@ class UNetModel_ForFineTune(nn.Module):
 
 
             # for mid part
-            _, mask = self.Marker.Mid_Net_1.forward(h, code)
+            _, mask = Marker.Mid_Net_1.forward(h, code)
             h += mask
             with th.no_grad():
                 h = self.middle_block(h, emb, context)
